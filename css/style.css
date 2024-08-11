@@ -68,7 +68,10 @@ header.shadow {
   font-size: 1.61rem;
   font-weight: 600;
   color: var(--text-color);
+  font-family: "Righteous", sans-serif;
 }
+
+
 .navbar {
   display: flex;
 }
