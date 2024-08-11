@@ -103,12 +103,16 @@ header.shadow {
   align-items: center;
   gap: 1rem;
 }
-.home-img {
+.home-img  {
   order: 3;
 }
+
 .home-img img {
   width: 75%;
+  box-shadow: 0 0 4px rgb(14 55 54/20%); /* Using rgba for better compatibility */
+  border-radius: 50%; Adjust the radius to your preference
 }
+
 
 .home-text{
   font-size: 1.7rem;
@@ -154,6 +158,7 @@ header.shadow {
 }
 .btn:hover {
   background: var(--hover);
+  
 }
  
 
@@ -166,7 +171,8 @@ header.shadow {
  
 .about-img img {
   width: 70%;
-  border-radius: 0.5rem;
+  border-radius: 10% ;
+  box-shadow: 0 0 4px rgb(14 55 54/20%);
 }
 .about-text p {
   font-size: var(--p-font);
@@ -344,6 +350,7 @@ form textarea {
   text-transform: uppercase;
   letter-spacing: 1px;
   margin-left: 35%;
+  border-radius: 10px;
 }
 .contact-button:hover {
   background: var(--hover);
