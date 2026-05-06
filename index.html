@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Subham Kumar </title>
+
+    <link rel="icon" type="image/png" href="assets/images/s-logo.png">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap"
+        rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body data-theme="dark">
+
+    <!-- Background Glows -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    
+    <!-- Animated Minimal Background Items -->
+    <div class="bg-particles">
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+        <div class="particle p4"></div>
+        <div class="particle p5"></div>
+        <div class="particle p6"></div>
+    </div>
+
+    <!-- Navigation Header -->
+    <header id="header">
+        <div class="container header-wrap">
+            <a href="#home" class="logo">S<span>.K</span></a>
+            <nav class="nav-links">
+                <a href="#home">Home</a>
+                <a href="#skills">Skills</a>
+                <a href="#portfolio">Projects</a>
+                <a href="#academics">Academics</a>
+                <a href="#achievements">Achievements</a>
+                <a href="#contact">Contact</a>
+                <button id="theme-toggle" aria-label="Toggle Theme">
+                    <i class='bx bx-moon'></i>
+                </button>
+            </nav>
+            <a href="#contact" id="hire-me-btn" class="btn">Hire Me</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <main>
+        <section class="hero" id="home">
+            <div class="container">
+                <div class="hero-content">
+                    <div class="hero-profile-img reveal">
+                        <img src="assets/images/profile.png" alt="Subham Kumar">
+                    </div>
+                    <h3 class="reveal"
+                        style="color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: 2px; font-size: 0.9rem; margin-bottom: 1rem;">
+                        Machine Learning • Computer Vision • Frontend</h3>
+                    <h1 class="reveal">Subham <span style="color: var(--accent);">Kumar</span></h1>
+                    <p class="reveal" style="font-size: 1.5rem; font-weight: 600; margin-bottom: 1.5rem;">I'm a <span
+                            class="typing-text" style="color: var(--accent);"></span></p>
+                    <p class="reveal"
+                        style="max-width: 700px; margin: 0 auto 3rem; line-height: 1.7; color: var(--text-dim);">M.Tech
+                        CSE candidate at NIT Silchar specializing in Machine Learning, Computer Vision, and modern
+                        frontend development. Experienced in building deep learning pipelines and intelligent AI
+                        systems.</p>
+                    <div class="reveal hero-btns" style="display: flex; gap: 1rem; justify-content: center;">
+                        <a href="#portfolio" class="btn">Explore Projects</a>
+                        <a href="assets/resume/cv.pdf" class="btn btn-outline" download>Download Resume</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Skills Section -->
+        <section class="section" id="skills">
+            <div class="container">
+                <h2 class="section-title reveal">Technical Skills</h2>
+                <div class="skills-grid">
+                    <!-- Programming -->
+                    <div class="skill-card reveal">
+                        <i class='bx bx-code-alt'
+                            style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Programming</h3>
+                        <div class="skill-list" style="margin-top: 1rem;">
+                            <span class="skill-badge">Python</span>
+                            <span class="skill-badge">C++</span>
+                            <span class="skill-badge">SQL</span>
+                        </div>
+                    </div>
+
+                    <!-- AI / ML -->
+                    <div class="skill-card reveal">
+                        <i class='bx bx-brain'
+                            style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Machine Learning</h3>
+                        <div class="skill-list" style="margin-top: 1rem;">
+                            <span class="skill-badge">NumPy</span>
+                            <span class="skill-badge">Pandas</span>
+                            <span class="skill-badge">scikit-learn</span>
+                            <span class="skill-badge">Matplotlib</span>
+                            <span class="skill-badge">Seaborn</span>
+                        </div>
+                    </div>
+
+                    <!-- Deep Learning -->
+                    <div class="skill-card reveal">
+                        <i class='bx bx-layer'
+                            style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Deep Learning</h3>
+                        <div class="skill-list" style="margin-top: 1rem;">
+                            <span class="skill-badge">PyTorch</span>
+                            <span class="skill-badge">TensorFlow</span>
+                            <span class="skill-badge">Keras</span>
+                        </div>
+                    </div>
+
+                    <!-- Web Dev -->
+                    <div class="skill-card reveal">
+                        <i class='bx bx-globe'
+                            style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Web Technologies</h3>
+                        <div class="skill-list" style="margin-top: 1rem;">
+                            <span class="skill-badge">HTML</span>
+                            <span class="skill-badge">CSS</span>
+                            <span class="skill-badge">JavaScript</span>
+                            <span class="skill-badge">Bootstrap</span>
+                            <span class="skill-badge">Tailwind CSS</span>
+                        </div>
+                    </div>
+
+                    <!-- Tools -->
+                    <div class="skill-card reveal" style="grid-column: span 1;">
+                        <i class='bx bx-wrench'
+                            style="font-size: 2.5rem; color: var(--accent); margin-bottom: 1rem;"></i>
+                        <h3>Tools & Platforms</h3>
+                        <div class="skill-list" style="margin-top: 1rem;">
+                            <span class="skill-badge">Git/GitHub</span>
+                            <span class="skill-badge">Jupyter</span>
+                            <span class="skill-badge">Colab</span>
+                            <span class="skill-badge">Kaggle</span>
+                            <span class="skill-badge">MySQL</span>
+                            <span class="skill-badge">VS Code</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="section" id="portfolio">
+            <div class="container">
+                <h2 class="section-title reveal">Featured Work</h2>
+                <div class="projects-grid">
+                    <div class="project-card reveal">
+                        <div class="pj-img"><img src="assets/images/project-demo-1.jpg" alt="Fingerprint Analysis">
+                        </div>
+                        <div class="pj-info">
+                            <div class="pj-tags"><span class="tag">AI Research</span></div>
+                            <h3>Fingerprint Analysis (StackCNN)</h3>
+                            <p>StackCNN-based binary hashing for robust fingerprint analysis. Implemented
+                                noise-invariant classification via Normalized Hamming Distance.</p>
+                            <a href="https://github.com/SubhamKumar25" target="_blank" class="btn"
+                                style="width: 100%;">Source Code</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card reveal">
+                        <div class="pj-img"><img src="assets/images/chatbot.png" alt="Chatbot"></div>
+                        <div class="pj-info">
+                            <div class="pj-tags"><span class="tag">NLP Agent</span></div>
+                            <h3>AI Support Agent</h3>
+                            <p>Multilingual assistant with neural intent classification.</p>
+                            <a href="https://github.com/SubhamKumar25/Customer-Support-chatbot" target="_blank"
+                                class="btn" style="width: 100%;">Source Code</a>
+                        </div>
+                    </div>
+
+                    <div class="project-card reveal">
+                        <div class="pj-img"><img src="assets/images/consultancy.png" alt="Consultancy"></div>
+                        <div class="pj-info">
+                            <div class="pj-tags"><span class="tag">Web Platform</span></div>
+                            <h3>Edu Platform</h3>
+                            <p>High-fidelity responsive consultancy platform.</p>
+                            <a href="https://consultancy-site-delta.vercel.app/" target="_blank" class="btn"
+                                style="width: 100%;">Live Preview</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Academics Section -->
+        <section class="section" id="academics">
+            <div class="container">
+                <h2 class="section-title reveal">Academics</h2>
+                <div class="timeline">
+                    <!-- M.Tech -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2023 — 2026</span>
+                            <h3>M.Tech in Computer Science</h3>
+                            <p>National Institute of Technology, Silchar</p>
+                            <p style="font-size: 0.85rem; color: var(--text-dim);">Specialized in AI, ML, and Computer
+                                Vision. MHRD Scholar.</p>
+                        </div>
+                    </div>
+
+                    <!-- B.Tech -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2019 — 2023</span>
+                            <h3>B.Tech in Computer Science</h3>
+                            <p>College of Engineering Bhubaneswar</p>
+                            <p style="font-size: 0.85rem; color: var(--text-dim);">Odisha, India. Focus on core software
+                                engineering and data structures.</p>
+                        </div>
+                    </div>
+
+                    <!-- Class XII -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2018 — 2019</span>
+                            <h3>Senior Secondary (XII)</h3>
+                            <p>Marwari College, Ranchi</p>
+                            <p style="font-size: 0.85rem; color: var(--text-dim);">Jharkhand. Majored in Science (PCM).
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Class X -->
+                    <div class="timeline-item reveal">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <span class="timeline-date">2015 — 2016</span>
+                            <h3>Secondary (X)</h3>
+                            <p>High School Mohanpur, Gaya</p>
+                            <p style="font-size: 0.85rem; color: var(--text-dim);">Bihar. Foundation in science and
+                                mathematics.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Achievements Section -->
+        <section class="section bg-secondary" id="achievements">
+            <div class="container">
+                <h2 class="section-title reveal">Achievements</h2>
+                <div class="achievements-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <!-- MHRD -->
+                    <div class="achievement-card reveal">
+                        <div class="ach-icon"><i class='bx bxs-award'></i></div>
+                        <div class="ach-info">
+                            <h3>MHRD Scholarship</h3>
+                            <p>Recipient of MHRD Scholarship for M.Tech at National Institute of Technology, Silchar.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- GATE -->
+                    <div class="achievement-card reveal">
+                        <div class="ach-icon"><i class='bx bxs-check-shield'></i></div>
+                        <div class="ach-info">
+                            <h3>Qualified GATE 2023</h3>
+                            <p>Qualified in Computer Science and Information Technology.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section class="section" id="contact">
+            <div class="container">
+                <div class="contact-card reveal">
+                    <h2 class="section-title">Send a Message</h2>
+                    <p style="color: var(--text-dim); margin-bottom: 3rem;">Have a project in mind? Let's build
+                        something together.</p>
+
+                    <form action="https://formspree.io/f/kumarsubhamsk339@gmail.com" method="POST" class="contact-form">
+                        <div class="form-group">
+                            <input type="text" name="name" placeholder="Your Name" required>
+                            <input type="email" name="email" placeholder="Your Email" required>
+                        </div>
+                        <input type="text" name="subject" placeholder="Subject" required>
+                        <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+                        <button type="submit" class="btn" style="width: 100%; padding: 1.2rem;">Send Message <i
+                                class='bx bx-send' style="margin-left: 8px;"></i></button>
+                    </form>
+
+                    <div class="social-links">
+                        <a href="https://github.com/SubhamKumar25" target="_blank"><i class='bx bxl-github'></i></a>
+                        <a href="https://www.linkedin.com/in/subham-kumar-82696b276" target="_blank"><i
+                                class='bx bxl-linkedin'></i></a>
+                        <a href="mailto:kumarsubhamsk339@gmail.com"><i class='bx bx-envelope'></i></a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 4rem 0; text-align: center; color: var(--text-dim); font-size: 0.9rem;">
+        <p style="margin-bottom: 1rem;">kumarsubhamsk339@gmail.com</p>
+        &copy; 2024 Subham Kumar. All rights reserved.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
