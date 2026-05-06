@@ -146,7 +146,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function animateBackground() {
-        // Smoothly interpolate towards target for a "liquid" feel
         mouseX += (targetX - mouseX) * 0.1;
         mouseY += (targetY - mouseY) * 0.1;
 
@@ -161,5 +160,143 @@ document.addEventListener('DOMContentLoaded', () => {
         requestAnimationFrame(animateBackground);
     }
     animateBackground();
+
+    /**
+     * 8. DYNAMIC GITHUB PROJECTS ENGINE
+     * Automatically fetches and categorizes your latest work.
+     */
+    const GITHUB_USERNAME = "SubhamKumar25";
+    const GITHUB_PROJECTS_GRID = document.getElementById('github-projects-grid');
+
+    async function fetchGitHubProjects() {
+        try {
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12`);
+            if (!response.ok) throw new Error('GitHub API Limit Reached or Network Error');
+            
+            let repos = await response.json();
+            
+            // Filter out forks and empty repos if needed
+            repos = repos.filter(repo => !repo.fork && repo.name !== GITHUB_USERNAME);
+            
+            // Limit to top 6 latest
+            const latestRepos = repos.slice(0, 6);
+            
+            renderGitHubProjects(latestRepos);
+        } catch (error) {
+            console.error('GitHub Fetch Error:', error);
+            if (GITHUB_PROJECTS_GRID) {
+                GITHUB_PROJECTS_GRID.innerHTML = `<p style="color: var(--text-dim); text-align: center; grid-column: 1/-1;">Error loading GitHub projects. Please visit <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color: var(--accent);">GitHub Profile</a> directly.</p>`;
+            }
+        }
+    }
+
+    function renderGitHubProjects(repos) {
+        if (!GITHUB_PROJECTS_GRID) return;
+        
+        GITHUB_PROJECTS_GRID.innerHTML = ''; // Clear skeletons
+
+        repos.forEach(repo => {
+            const category = detectCategory(repo);
+            const description = repo.description || generateSummary(repo, category);
+            const liveLink = repo.homepage || detectLiveLinkFromDescription(repo.description);
+            const techStack = repo.topics && repo.topics.length > 0 ? repo.topics : [repo.language].filter(Boolean);
+            
+            const card = document.createElement('div');
+            card.className = 'project-card repo-card reveal';
+            
+            card.innerHTML = `
+                <div class="pj-info repo-card">
+                    <div class="repo-header">
+                        <div class="pj-tags">
+                            <span class="tag">${category}</span>
+                        </div>
+                        <h3 style="margin-top: 0.5rem;">${formatRepoName(repo.name)}</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem;">
+                            ${description}
+                        </p>
+                    </div>
+                    
+                    <div class="repo-body">
+                        <div class="repo-stats">
+                            <span><i class='bx bx-star'></i> ${repo.stargazers_count}</span>
+                            <span><i class='bx bx-git-repo-forked'></i> ${repo.forks_count}</span>
+                            <span><i class='bx bx-time-five'></i> ${new Date(repo.updated_at).toLocaleDateString()}</span>
+                        </div>
+                        <div class="repo-badges">
+                            ${techStack.slice(0, 4).map(tech => `<span class="badge">${tech}</span>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="repo-footer">
+                        <a href="${repo.html_url}" target="_blank" class="btn" style="padding: 0.6rem 1rem; font-size: 0.85rem;">Code</a>
+                        ${liveLink ? `<a href="${liveLink}" target="_blank" class="btn btn-outline" style="padding: 0.6rem 1rem; font-size: 0.85rem;">Live</a>` : '<span style="font-size: 0.8rem; opacity: 0.5;">Source Only</span>'}
+                    </div>
+                </div>
+            `;
+            
+            GITHUB_PROJECTS_GRID.appendChild(card);
+            
+            // Re-observe new element
+            revealObserver.observe(card);
+        });
+    }
+
+    function generateSummary(repo, category) {
+        const name = formatRepoName(repo.name).toLowerCase();
+        const displayName = formatRepoName(repo.name);
+
+        if (name.includes('clone')) {
+            return `A high-fidelity ${displayName} demonstrating proficiency in complex layouts, interactive components, and modern UI design.`;
+        }
+        if (name.includes('student') || name.includes('table') || name.includes('data')) {
+            return `A specialized data management implementation for ${displayName}, focusing on organized information architecture and efficient processing.`;
+        }
+        if (name.includes('portfolio') || name.includes('site') || name.includes('web')) {
+            return `A professional web platform showcasing high-performance frontend engineering and responsive design principles.`;
+        }
+
+        switch (category) {
+            case 'AI/ML':
+                return `${name} is an advanced machine learning implementation focusing on neural architectures and data-driven intelligence.`;
+            case 'Deep Learning':
+                return `High-performance ${name} system utilizing deep neural networks for complex pattern recognition and computer vision tasks.`;
+            case 'NLP Agent':
+                return `An intelligent natural language processor designed for automated text analysis and interactive AI communication.`;
+            case 'Frontend':
+                return `A responsive, high-performance web interface for ${name}, built with a focus on modern user experience and clean UI.`;
+            case 'Backend':
+                return `Scalable server-side architecture for ${name}, designed for high security, efficiency, and robust data management.`;
+            default:
+                return `A professional software engineering project demonstrating clean code, modular design, and industry-standard practices.`;
+        }
+    }
+
+    function formatRepoName(name) {
+        return name.replace(/-/g, ' ').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+
+    function detectCategory(repo) {
+        const name = repo.name.toLowerCase();
+        const desc = (repo.description || '').toLowerCase();
+        const topics = (repo.topics || []).map(t => t.toLowerCase());
+
+        if (name.includes('ml') || name.includes('ai') || name.includes('deep-learning') || topics.includes('machine-learning')) return 'AI/ML';
+        if (name.includes('vision') || topics.includes('computer-vision')) return 'Deep Learning';
+        if (name.includes('bot') || name.includes('nlp')) return 'NLP Agent';
+        if (name.includes('react') || name.includes('vue') || topics.includes('frontend')) return 'Frontend';
+        if (name.includes('api') || name.includes('backend') || topics.includes('backend')) return 'Backend';
+        
+        return 'Project';
+    }
+
+    function detectLiveLinkFromDescription(desc) {
+        if (!desc) return null;
+        const urlRegex = /(https?:\/\/[^\s]+)/g;
+        const matches = desc.match(urlRegex);
+        return matches ? matches[0] : null;
+    }
+
+    // Start fetching
+    fetchGitHubProjects();
 
 });
