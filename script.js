@@ -1,302 +1,273 @@
 /**
  * ====================================================
- * SUBHAM KUMAR | VANILLA JAVASCRIPT ENGINE
- * ====================================================
- * Clean, Commented, and Beginner-Friendly
- * No External Dependencies
+ * SUBHAM KUMAR | PREMIUM JS ENGINE (V2)
  * ====================================================
  */
 
 document.addEventListener('DOMContentLoaded', () => {
 
     /**
-     * 1. STICKY HEADER LOGIC
-     * Adds a background to the header when the user scrolls down.
+     * 1. THEME TOGGLE & PERSISTENCE
      */
-    const header = document.getElementById('header');
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50) {
-            header.classList.add('sticky');
-        } else {
-            header.classList.remove('sticky');
-        }
+    // Initial check (Anti-flash script in head handles the root attribute)
+    const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+    updateThemeIcon(savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = document.documentElement.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        
+        document.documentElement.setAttribute('data-theme', newTheme);
+        body.setAttribute('data-theme', newTheme); // Sync both for safety
+        localStorage.setItem('portfolio-theme', newTheme);
+        updateThemeIcon(newTheme);
     });
 
+    function updateThemeIcon(theme) {
+        const icon = themeToggle.querySelector('i');
+        if (theme === 'light') {
+            icon.classList.replace('bx-moon', 'bx-sun');
+        } else {
+            icon.classList.replace('bx-sun', 'bx-moon');
+        }
+    }
+
     /**
-     * 2. SCROLL REVEAL ANIMATIONS (Intersection Observer)
-     * Automatically triggers the "active" class on elements when they enter the viewport.
+     * 2. MOBILE MENU TOGGLE
+     */
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuBtn) {
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            const icon = mobileMenuBtn.querySelector('i');
+            icon.classList.toggle('bx-menu');
+            icon.classList.toggle('bx-x');
+        });
+    }
+
+    /**
+     * 3. SCROLL REVEAL (INTERSECTION OBSERVER)
      */
     const revealElements = document.querySelectorAll('.reveal');
-
     const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('active');
-                // Optional: Unobserve after revealing to stop re-triggering
-                // revealObserver.unobserve(entry.target);
             }
         });
-    }, {
-        threshold: 0.15 // Trigger when 15% of the element is visible
-    });
+    }, { threshold: 0.1 });
 
-    revealElements.forEach(element => {
-        revealObserver.observe(element);
-    });
+    revealElements.forEach(el => revealObserver.observe(el));
 
     /**
-     * 3. TYPING ANIMATION (Hero Section)
-     * Animates the roles text for a dynamic feel.
+     * 4. TYPING ANIMATION (Preserved Logic)
      */
     const typingText = document.querySelector('.typing-text');
     if (typingText) {
-        const roles = ["ML Engineer", "AI Developer", "Frontend Developer", "Researcher"];
-        let roleIdx = 0;
-        let charIdx = 0;
-        let isDeleting = false;
+        const roles = ["Frontend Developer", "ML Engineer", "AI Developer", "Researcher"];
+        let roleIdx = 0, charIdx = 0, isDeleting = false;
 
         function type() {
-            const currentRole = roles[roleIdx];
-            
-            if (isDeleting) {
-                typingText.textContent = currentRole.substring(0, charIdx--);
-            } else {
-                typingText.textContent = currentRole.substring(0, charIdx++);
-            }
+            const current = roles[roleIdx];
+            typingText.textContent = isDeleting ? current.substring(0, charIdx--) : current.substring(0, charIdx++);
 
-            let typeSpeed = isDeleting ? 50 : 150;
-
-            if (!isDeleting && charIdx === currentRole.length + 1) {
-                isDeleting = true;
-                typeSpeed = 2000; // Pause at end
+            let speed = isDeleting ? 50 : 150;
+            if (!isDeleting && charIdx === current.length + 1) {
+                isDeleting = true; speed = 2000;
             } else if (isDeleting && charIdx === 0) {
-                isDeleting = false;
-                roleIdx = (roleIdx + 1) % roles.length;
-                typeSpeed = 500;
+                isDeleting = false; roleIdx = (roleIdx + 1) % roles.length; speed = 500;
             }
-
-            setTimeout(type, typeSpeed);
+            setTimeout(type, speed);
         }
         type();
     }
 
     /**
-     * 5. THEME TOGGLE LOGIC (Dark/Light Mode)
+     * 5. DYNAMIC GITHUB PROJECTS (Preserved Logic)
      */
-    const themeToggle = document.getElementById('theme-toggle');
-    const body = document.body;
-    const themeIcon = themeToggle.querySelector('i');
+    const GITHUB_USERNAME = "SubhamKumar25";
+    const GITHUB_GRID = document.getElementById('github-projects-grid');
 
-    themeToggle.addEventListener('click', () => {
-        if (body.getAttribute('data-theme') === 'dark') {
-            body.setAttribute('data-theme', 'light');
-            themeIcon.classList.replace('bx-moon', 'bx-sun');
-        } else {
-            body.setAttribute('data-theme', 'dark');
-            themeIcon.classList.replace('bx-sun', 'bx-moon');
+    async function fetchRepos() {
+        try {
+            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12`);
+            if (!response.ok) throw new Error('API limit');
+            let repos = await response.json();
+            repos = repos.filter(repo => !repo.fork && repo.name !== GITHUB_USERNAME).slice(0, 6);
+            renderRepos(repos);
+        } catch (error) {
+            console.error(error);
+            if (GITHUB_GRID) GITHUB_GRID.innerHTML = '<p>GitHub stats temporarily unavailable.</p>';
         }
-    });
+    }
+
+    function renderRepos(repos) {
+        if (!GITHUB_GRID) return;
+        GITHUB_GRID.innerHTML = '';
+        repos.forEach(repo => {
+            const liveLink = repo.homepage || detectURL(repo.description);
+            const createdDate = new Date(repo.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' });
+            
+            const card = document.createElement('div');
+            card.className = 'project-card repo-card reveal';
+            card.innerHTML = `
+                <div class="pj-info">
+                    <div class="pj-tags">
+                        <span class="tag">Open Source</span>
+                        <span class="tag-date">Started ${createdDate}</span>
+                    </div>
+                    <h3>${repo.name.replace(/-/g, ' ').replace(/_/g, ' ')}</h3>
+                    <p>${repo.description || "Consistent engineering on modern tech stacks."}</p>
+                    <div class="repo-stats" style="display:flex; gap:1rem; font-size:0.8rem; margin-bottom:1rem; opacity:0.7;">
+                        <span><i class='bx bx-star'></i> ${repo.stargazers_count}</span>
+                        <span><i class='bx bx-git-repo-forked'></i> ${repo.forks_count}</span>
+                    </div>
+                    <div style="display:flex; gap:1rem; margin-top:auto;">
+                        <a href="${repo.html_url}" target="_blank" class="btn btn-outline" style="flex:1;">Code</a>
+                        ${liveLink ? `<a href="${liveLink}" target="_blank" class="btn" style="flex:1;">Live</a>` : ''}
+                    </div>
+                </div>
+            `;
+            GITHUB_GRID.appendChild(card);
+            revealObserver.observe(card);
+        });
+    }
+
+    function detectURL(text) {
+        if (!text) return null;
+        const match = text.match(/(https?:\/\/[^\s]+)/g);
+        return match ? match[0] : null;
+    }
 
     /**
-     * 6. HIRE ME BUTTON LOGIC
+     * 6. CONTACT FORM HANDLING (Premium Feedback)
      */
-    const hireMeBtn = document.getElementById('hire-me-btn');
-    if (hireMeBtn) {
-        hireMeBtn.addEventListener('click', (e) => {
+    const contactForm = document.getElementById('portfolio-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', async (e) => {
             e.preventDefault();
-            const contactSection = document.querySelector('#contact');
-            if (contactSection) {
-                // 1. Smooth scroll to contact
-                contactSection.scrollIntoView({ behavior: 'smooth' });
-
-                // 2. Focus the name field after a short delay
+            const btn = contactForm.querySelector('button');
+            const originalText = btn.innerHTML;
+            
+            // Loading State
+            btn.disabled = true;
+            btn.innerHTML = `Sending... <i class='bx bx-loader-alt bx-spin'></i>`;
+            
+            try {
+                const response = await fetch(contactForm.action, {
+                    method: 'POST',
+                    body: new FormData(contactForm),
+                    headers: { 'Accept': 'application/json' }
+                });
+                
+                if (response.ok) {
+                    btn.innerHTML = `Success! <i class='bx bx-check-circle'></i>`;
+                    btn.style.background = '#25D366';
+                    contactForm.reset();
+                    setTimeout(() => {
+                        btn.disabled = false;
+                        btn.innerHTML = originalText;
+                        btn.style.background = '';
+                    }, 5000);
+                } else {
+                    throw new Error('Failed');
+                }
+            } catch (err) {
+                btn.innerHTML = `Error! Try Again <i class='bx bx-error-circle'></i>`;
+                btn.style.background = '#ff3b30';
                 setTimeout(() => {
-                    const nameField = document.querySelector('input[name="name"]');
-                    if (nameField) {
-                        nameField.focus();
-                        // 3. Optional: Add a temporary glow to highlight the form
-                        const contactCard = document.querySelector('.contact-card');
-                        contactCard.style.borderColor = 'var(--accent)';
-                        contactCard.style.boxShadow = '0 0 30px var(--accent-glow)';
-                        setTimeout(() => {
-                            contactCard.style.borderColor = '';
-                            contactCard.style.boxShadow = '';
-                        }, 2000);
-                    }
-                }, 800);
+                    btn.disabled = false;
+                    btn.innerHTML = originalText;
+                    btn.style.background = '';
+                }, 3000);
             }
         });
     }
 
     /**
-     * 7. HIGH-PERFORMANCE MOUSE TRACKING
-     * Optimized using requestAnimationFrame for 60fps smoothness.
+     * 7. INTERACTIVE BACKGROUND ENGINE
      */
-    const particles = document.querySelectorAll('.particle');
-    const glow1 = document.querySelector('.glow-1');
-    const glow2 = document.querySelector('.glow-2');
+    const orbs = document.querySelectorAll('.particle');
+    const glows = document.querySelectorAll('.bg-glow');
+    const follower = document.querySelector('.cursor-follower');
     
     let mouseX = 0, mouseY = 0;
-    let targetX = 0, targetY = 0;
+    let currentX = 0, currentY = 0;
+    let rawMouseX = 0, rawMouseY = 0;
 
-    document.addEventListener('mousemove', (e) => {
-        targetX = (e.clientX / window.innerWidth) - 0.5;
-        targetY = (e.clientY / window.innerHeight) - 0.5;
+    window.addEventListener('mousemove', (e) => {
+        rawMouseX = e.clientX;
+        rawMouseY = e.clientY;
+        // Parallax relative to center
+        mouseX = (e.clientX - window.innerWidth / 2) / 20; // Increased amplitude
+        mouseY = (e.clientY - window.innerHeight / 2) / 20;
     });
 
     function animateBackground() {
-        mouseX += (targetX - mouseX) * 0.1;
-        mouseY += (targetY - mouseY) * 0.1;
+        // Smoothly interpolate towards target position (lerp)
+        currentX += (mouseX - currentX) * 0.08;
+        currentY += (mouseY - currentY) * 0.08;
 
-        particles.forEach((p, index) => {
-            const depth = (index + 1) * 40;
-            p.style.transform = `translate(${mouseX * depth}px, ${mouseY * depth}px)`;
+        // 1. Update Parallax Orbs
+        orbs.forEach((orb, index) => {
+            const factor = (index + 1) * 0.4; 
+            orb.style.transform = `translate(${currentX * factor}px, ${currentY * factor}px)`;
         });
 
-        if (glow1) glow1.style.transform = `translate(${mouseX * 100}px, ${mouseY * 100}px)`;
-        if (glow2) glow2.style.transform = `translate(${mouseX * -100}px, ${mouseY * -100}px)`;
+        // 2. Update Corner Glows
+        glows.forEach((glow, index) => {
+            const factor = (index + 1) * 0.2;
+            glow.style.transform = `translate(${currentX * factor}px, ${currentY * factor}px)`;
+        });
+
+        // 3. Update Cursor Follower
+        if (follower) {
+            follower.style.left = `${rawMouseX}px`;
+            follower.style.top = `${rawMouseY}px`;
+        }
 
         requestAnimationFrame(animateBackground);
     }
     animateBackground();
 
+    // Start fetching
+    fetchRepos();
+
     /**
-     * 8. DYNAMIC GITHUB PROJECTS ENGINE
-     * Automatically fetches and categorizes your latest work.
+     * 8. DROPDOWN TOGGLE ENGINE
      */
-    const GITHUB_USERNAME = "SubhamKumar25";
-    const GITHUB_PROJECTS_GRID = document.getElementById('github-projects-grid');
+    const dropbtn = document.querySelector('.dropbtn');
+    const dropdownContent = document.querySelector('.dropdown-content');
 
-    async function fetchGitHubProjects() {
-        try {
-            const response = await fetch(`https://api.github.com/users/${GITHUB_USERNAME}/repos?sort=updated&per_page=12`);
-            if (!response.ok) throw new Error('GitHub API Limit Reached or Network Error');
-            
-            let repos = await response.json();
-            
-            // Filter out forks and empty repos if needed
-            repos = repos.filter(repo => !repo.fork && repo.name !== GITHUB_USERNAME);
-            
-            // Limit to top 6 latest
-            const latestRepos = repos.slice(0, 6);
-            
-            renderGitHubProjects(latestRepos);
-        } catch (error) {
-            console.error('GitHub Fetch Error:', error);
-            if (GITHUB_PROJECTS_GRID) {
-                GITHUB_PROJECTS_GRID.innerHTML = `<p style="color: var(--text-dim); text-align: center; grid-column: 1/-1;">Error loading GitHub projects. Please visit <a href="https://github.com/${GITHUB_USERNAME}" target="_blank" style="color: var(--accent);">GitHub Profile</a> directly.</p>`;
+    const dropdownParent = document.querySelector('.dropdown');
+
+    if (dropbtn && dropdownContent) {
+        dropbtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dropdownContent.classList.toggle('show');
+            dropdownParent.classList.toggle('active');
+        });
+
+        // Close when clicking a link inside
+        dropdownContent.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                dropdownContent.classList.remove('show');
+                dropdownParent.classList.remove('active');
+            });
+        });
+
+        // Close when clicking outside
+        window.addEventListener('click', () => {
+            if (dropdownContent.classList.contains('show')) {
+                dropdownContent.classList.remove('show');
+                dropdownParent.classList.remove('active');
             }
-        }
-    }
-
-    function renderGitHubProjects(repos) {
-        if (!GITHUB_PROJECTS_GRID) return;
-        
-        GITHUB_PROJECTS_GRID.innerHTML = ''; // Clear skeletons
-
-        repos.forEach(repo => {
-            const category = detectCategory(repo);
-            const description = repo.description || generateSummary(repo, category);
-            const liveLink = repo.homepage || detectLiveLinkFromDescription(repo.description);
-            const techStack = repo.topics && repo.topics.length > 0 ? repo.topics : [repo.language].filter(Boolean);
-            
-            const card = document.createElement('div');
-            card.className = 'project-card repo-card reveal';
-            
-            card.innerHTML = `
-                <div class="pj-info repo-card">
-                    <div class="repo-header">
-                        <div class="pj-tags">
-                            <span class="tag">${category}</span>
-                        </div>
-                        <h3 style="margin-top: 0.5rem;">${formatRepoName(repo.name)}</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.5rem;">
-                            ${description}
-                        </p>
-                    </div>
-                    
-                    <div class="repo-body">
-                        <div class="repo-stats">
-                            <span><i class='bx bx-star'></i> ${repo.stargazers_count}</span>
-                            <span><i class='bx bx-git-repo-forked'></i> ${repo.forks_count}</span>
-                            <span><i class='bx bx-time-five'></i> ${new Date(repo.updated_at).toLocaleDateString()}</span>
-                        </div>
-                        <div class="repo-badges">
-                            ${techStack.slice(0, 4).map(tech => `<span class="badge">${tech}</span>`).join('')}
-                        </div>
-                    </div>
-
-                    <div class="repo-footer">
-                        <a href="${repo.html_url}" target="_blank" class="btn" style="padding: 0.6rem 1rem; font-size: 0.85rem;">Code</a>
-                        ${liveLink ? `<a href="${liveLink}" target="_blank" class="btn btn-outline" style="padding: 0.6rem 1rem; font-size: 0.85rem;">Live</a>` : '<span style="font-size: 0.8rem; opacity: 0.5;">Source Only</span>'}
-                    </div>
-                </div>
-            `;
-            
-            GITHUB_PROJECTS_GRID.appendChild(card);
-            
-            // Re-observe new element
-            revealObserver.observe(card);
         });
     }
-
-    function generateSummary(repo, category) {
-        const name = formatRepoName(repo.name).toLowerCase();
-        const displayName = formatRepoName(repo.name);
-
-        if (name.includes('clone')) {
-            return `A high-fidelity ${displayName} demonstrating proficiency in complex layouts, interactive components, and modern UI design.`;
-        }
-        if (name.includes('student') || name.includes('table') || name.includes('data')) {
-            return `A specialized data management implementation for ${displayName}, focusing on organized information architecture and efficient processing.`;
-        }
-        if (name.includes('portfolio') || name.includes('site') || name.includes('web')) {
-            return `A professional web platform showcasing high-performance frontend engineering and responsive design principles.`;
-        }
-
-        switch (category) {
-            case 'AI/ML':
-                return `${name} is an advanced machine learning implementation focusing on neural architectures and data-driven intelligence.`;
-            case 'Deep Learning':
-                return `High-performance ${name} system utilizing deep neural networks for complex pattern recognition and computer vision tasks.`;
-            case 'NLP Agent':
-                return `An intelligent natural language processor designed for automated text analysis and interactive AI communication.`;
-            case 'Frontend':
-                return `A responsive, high-performance web interface for ${name}, built with a focus on modern user experience and clean UI.`;
-            case 'Backend':
-                return `Scalable server-side architecture for ${name}, designed for high security, efficiency, and robust data management.`;
-            default:
-                return `A professional software engineering project demonstrating clean code, modular design, and industry-standard practices.`;
-        }
-    }
-
-    function formatRepoName(name) {
-        return name.replace(/-/g, ' ').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    }
-
-    function detectCategory(repo) {
-        const name = repo.name.toLowerCase();
-        const desc = (repo.description || '').toLowerCase();
-        const topics = (repo.topics || []).map(t => t.toLowerCase());
-
-        if (name.includes('ml') || name.includes('ai') || name.includes('deep-learning') || topics.includes('machine-learning')) return 'AI/ML';
-        if (name.includes('vision') || topics.includes('computer-vision')) return 'Deep Learning';
-        if (name.includes('bot') || name.includes('nlp')) return 'NLP Agent';
-        if (name.includes('react') || name.includes('vue') || topics.includes('frontend')) return 'Frontend';
-        if (name.includes('api') || name.includes('backend') || topics.includes('backend')) return 'Backend';
-        
-        return 'Project';
-    }
-
-    function detectLiveLinkFromDescription(desc) {
-        if (!desc) return null;
-        const urlRegex = /(https?:\/\/[^\s]+)/g;
-        const matches = desc.match(urlRegex);
-        return matches ? matches[0] : null;
-    }
-
-    // Start fetching
-    fetchGitHubProjects();
-
 });

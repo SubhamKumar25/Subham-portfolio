@@ -4,14 +4,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Subham Kumar </title>
+    <title>Subham Kumar | Frontend Developer & AI Enthusiast</title>
 
+    <!-- SEO & OpenGraph -->
+    <meta name="description"
+        content="M.Tech CSE Graduate specializing in Machine Learning, Computer Vision, and modern web technologies. Portfolio of Subham Kumar.">
+    <meta property="og:title" content="Subham Kumar | Developer Portfolio">
+    <meta property="og:description" content="Premium iOS-native portfolio featuring AI/ML and Frontend engineering.">
+    <meta property="og:image" content="assets/images/profile.png">
+    <meta name="theme-color" content="#000000">
+
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="assets/images/s-logo.png">
+
+    <!-- Fonts & Icons -->
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap"
         rel="stylesheet">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <link rel="stylesheet" href="style.css">
+
+    <!-- Anti-Flash Theme Script -->
+    <script>
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
 </head>
 
 <body data-theme="dark">
@@ -24,6 +41,7 @@
     <!-- Background Glows -->
     <div class="bg-glow glow-1"></div>
     <div class="bg-glow glow-2"></div>
+    <div class="cursor-follower"></div>
 
     <!-- Animated Minimal Background Items -->
     <div class="bg-particles">
@@ -31,13 +49,15 @@
         <div class="particle p2"></div>
         <div class="particle p3"></div>
         <div class="particle p4"></div>
-        <div class="particle p5"></div>
-        <div class="particle p6"></div>
+        <div class="particle p7"></div>
+        <div class="particle p8"></div>
+        <div class="particle p9"></div>
+        <div class="particle p10"></div>
     </div>
 
     <!-- Navigation Header -->
     <header id="header">
-        <div class="container header-wrap">
+        <div class="header-wrap">
             <a href="#home" class="logo">S<span>.K</span></a>
             <nav class="nav-links">
                 <a href="#home">Home</a>
@@ -45,18 +65,26 @@
                 <a href="#portfolio">Projects</a>
                 <a href="#academics">Academics</a>
                 <a href="#achievements">Achievements</a>
-                <a href="#contact">Contact</a>
-                <button id="theme-toggle" aria-label="Toggle Theme">
-                    <i class='bx bx-moon'></i>
-                </button>
+                <div class="dropdown">
+                    <a href="#" class="dropbtn">More <i class='bx bx-chevron-down'></i></a>
+                    <div class="dropdown-content">
+                        <a href="#services">Services</a>
+                        <a href="#testimonials">Testimonials</a>
+                    </div>
+                </div>
+                <a href="#contact" class="nav-contact-btn">Contact Us</a>
             </nav>
-            <a href="#contact" id="hire-me-btn" class="btn">Hire Me</a>
+            <div class="header-btns">
+                <button id="theme-toggle" title="Toggle Theme"><i class='bx bx-moon'></i></button>
+                <div class="mobile-toggle" id="mobile-menu-btn"><i class='bx bx-menu'></i></div>
+                <a href="#contact" id="hire-me-btn" class="btn btn-outline">Hire Me</a>
+            </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <main>
-        <section class="hero" id="home">
+        <section class="hero reveal" id="home">
             <div class="container">
                 <div class="hero-content">
                     <div class="hero-profile-img reveal">
@@ -75,6 +103,7 @@
                         systems.</p>
                     <div class="reveal hero-btns" style="display: flex; gap: 1rem; justify-content: center;">
                         <a href="#portfolio" class="btn">Explore Projects</a>
+                        <a href="#services" class="btn btn-outline">View Services</a>
                         <a href="https://drive.google.com/file/d/1vXQwOSpi7Uvhb7eXzM7sP7gkS2eyvWri/view?usp=sharing"
                             class="btn btn-outline" target="_blank">Download Resume</a>
                     </div>
@@ -83,7 +112,7 @@
         </section>
 
         <!-- Skills Section -->
-        <section class="section" id="skills">
+        <section class="section reveal" id="skills">
             <div class="container">
                 <h2 class="section-title reveal">Technical Skills</h2>
                 <div class="skills-grid">
@@ -95,6 +124,7 @@
                         <div class="skill-list" style="margin-top: 1rem;">
                             <span class="skill-badge">Python</span>
                             <span class="skill-badge">C++</span>
+                            <span class="skill-badge">Java</span>
                             <span class="skill-badge">SQL</span>
                         </div>
                     </div>
@@ -158,7 +188,7 @@
         </section>
 
         <!-- Portfolio Section -->
-        <section class="section" id="portfolio">
+        <section class="section reveal" id="portfolio">
             <div class="container">
                 <h2 class="section-title reveal">Featured Projects</h2>
                 <div class="projects-grid">
@@ -166,7 +196,10 @@
                         <div class="pj-img"><img src="assets/images/project-demo-1.jpg" alt="Fingerprint Analysis">
                         </div>
                         <div class="pj-info">
-                            <div class="pj-tags"><span class="tag">AI Research</span></div>
+                            <div class="pj-tags">
+                                <span class="tag">AI Research</span>
+                                <span class="tag-date">2025</span>
+                            </div>
                             <h3>Fingerprint Analysis (StackCNN)</h3>
                             <p>StackCNN-based binary hashing for robust fingerprint analysis. Implemented
                                 noise-invariant classification via Normalized Hamming Distance.</p>
@@ -178,7 +211,10 @@
                     <div class="project-card reveal">
                         <div class="pj-img"><img src="assets/images/chatbot.png" alt="Chatbot"></div>
                         <div class="pj-info">
-                            <div class="pj-tags"><span class="tag">NLP Agent</span></div>
+                            <div class="pj-tags">
+                                <span class="tag">NLP Agent</span>
+                                <span class="tag-date">2025</span>
+                            </div>
                             <h3>AI Support Agent</h3>
                             <p>Multilingual assistant with neural intent classification.</p>
                             <a href="https://github.com/SubhamKumar25/Customer-Support-chatbot" target="_blank"
@@ -189,7 +225,10 @@
                     <div class="project-card reveal">
                         <div class="pj-img"><img src="assets/images/consultancy.png" alt="Consultancy"></div>
                         <div class="pj-info">
-                            <div class="pj-tags"><span class="tag">Web Platform</span></div>
+                            <div class="pj-tags">
+                                <span class="tag">Web Platform</span>
+                                <span class="tag-date">2023</span>
+                            </div>
                             <h3>Edu Platform</h3>
                             <p>High-fidelity responsive consultancy platform.</p>
                             <a href="https://consultancy-site-delta.vercel.app/" target="_blank" class="btn"
@@ -201,7 +240,7 @@
         </section>
 
         <!-- Dynamic GitHub Projects Section -->
-        <section class="section bg-secondary" id="github-projects">
+        <section class="section reveal" id="github-projects">
             <div class="container">
                 <h2 class="section-title reveal">GitHub Projects</h2>
                 <div id="github-projects-grid" class="projects-grid">
@@ -214,7 +253,7 @@
         </section>
 
         <!-- Academics Section -->
-        <section class="section" id="academics">
+        <section class="section reveal" id="academics">
             <div class="container">
                 <h2 class="section-title reveal">Academics</h2>
                 <div class="timeline">
@@ -270,11 +309,10 @@
         </section>
 
         <!-- Achievements Section -->
-        <section class="section bg-secondary" id="achievements">
+        <section class="section reveal" id="achievements">
             <div class="container">
                 <h2 class="section-title reveal">Achievements</h2>
-                <div class="achievements-grid"
-                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="achievements-grid">
                     <!-- MHRD -->
                     <div class="achievement-card reveal">
                         <div class="ach-icon"><i class='bx bxs-award'></i></div>
@@ -297,8 +335,87 @@
             </div>
         </section>
 
+        <!-- Services Section -->
+        <section class="section reveal" id="services">
+            <div class="container">
+                <h2 class="section-title reveal">Specialized Services</h2>
+                <div class="services-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.5rem;">
+                    <!-- Web Dev -->
+                    <div class="skill-card reveal coming-soon">
+                        <div class="shimmer-box"></div>
+                        <i class='bx bx-code-block'></i>
+                        <h3>Web Development</h3>
+                        <span class="status-tag">Under Development</span>
+                    </div>
+                    <!-- AI/ML -->
+                    <div class="skill-card reveal coming-soon">
+                        <div class="shimmer-box"></div>
+                        <i class='bx bx-brain'></i>
+                        <h3>AI/ML Solutions</h3>
+                        <span class="status-tag">Coming Soon</span>
+                    </div>
+                    <!-- UI/UX -->
+                    <div class="skill-card reveal coming-soon">
+                        <div class="shimmer-box"></div>
+                        <i class='bx bx-palette'></i>
+                        <h3>UI/UX Design</h3>
+                        <span class="status-tag">Under Development</span>
+                    </div>
+                    <!-- Full Stack -->
+                    <div class="skill-card reveal coming-soon">
+                        <div class="shimmer-box"></div>
+                        <i class='bx bx-rocket'></i>
+                        <h3>Full Stack Apps</h3>
+                        <span class="status-tag">Coming Soon</span>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; margin-top: 3rem;">
+                    <p style="color: var(--text-dim);">Services will be updated soon with detailed offerings.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="section reveal" id="testimonials">
+            <div class="container">
+                <h2 class="section-title reveal">Testimonials</h2>
+                <div class="testimonials-grid"
+                    style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                    <div class="project-card reveal shimmer-card" style="padding: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="shimmer-avatar"></div>
+                            <div style="flex: 1;">
+                                <div class="shimmer-line" style="width: 60%; height: 12px; margin-bottom: 8px;"></div>
+                                <div class="shimmer-line" style="width: 40%; height: 8px;"></div>
+                            </div>
+                        </div>
+                        <div class="shimmer-line" style="width: 100%; height: 10px; margin-bottom: 8px;"></div>
+                        <div class="shimmer-line" style="width: 90%; height: 10px; margin-bottom: 8px;"></div>
+                        <div class="shimmer-line" style="width: 70%; height: 10px;"></div>
+                    </div>
+                    <div class="project-card reveal shimmer-card" style="padding: 2rem;">
+                        <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem;">
+                            <div class="shimmer-avatar"></div>
+                            <div style="flex: 1;">
+                                <div class="shimmer-line" style="width: 65%; height: 12px; margin-bottom: 8px;"></div>
+                                <div class="shimmer-line" style="width: 45%; height: 8px;"></div>
+                            </div>
+                        </div>
+                        <div class="shimmer-line" style="width: 100%; height: 10px; margin-bottom: 8px;"></div>
+                        <div class="shimmer-line" style="width: 95%; height: 10px; margin-bottom: 8px;"></div>
+                        <div class="shimmer-line" style="width: 80%; height: 10px;"></div>
+                    </div>
+                </div>
+                <div class="reveal" style="text-align: center; margin-top: 3rem;">
+                    <p style="color: var(--text-dim);">Client and recruiter feedback will be added here in future
+                        updates.</p>
+                </div>
+            </div>
+        </section>
+
         <!-- Contact Section -->
-        <section class="section" id="contact">
+        <section class="section reveal" id="contact">
             <div class="container">
                 <div class="contact-card reveal">
                     <h2 class="section-title">Send a Message</h2>
