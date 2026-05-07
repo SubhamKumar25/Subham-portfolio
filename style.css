@@ -993,7 +993,7 @@ header {
         right: 1.5rem;
         left: auto;
         width: 250px; /* Aligned to the menu pill */
-        background: rgba(10, 10, 12, 0.95);
+        background: var(--bg-glass);
         backdrop-filter: blur(30px);
         -webkit-backdrop-filter: blur(30px);
         border: 1px solid var(--border);
