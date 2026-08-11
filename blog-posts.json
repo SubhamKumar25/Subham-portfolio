@@ -1,0 +1,12 @@
+{
+  "posts": [
+    {
+      "title": "Welcome to My AI Engineering Blog",
+      "slug": "welcome-ai-engineering-blog",
+      "date": "2026-08-11",
+      "excerpt": "Notes on machine learning, computer vision, frontend engineering, and project learnings.",
+      "tags": ["AI", "Portfolio", "Engineering"],
+      "content": "This blog space is designed for sharing project updates, research notes, and engineering write-ups. Use the admin panel to add new posts to this JSON collection, then redeploy the static site."
+    }
+  ]
+}

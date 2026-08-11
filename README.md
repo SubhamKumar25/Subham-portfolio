@@ -53,6 +53,12 @@ Modify the `:root` variables in `style.css`:
 }
 ```
 
+## 🔐 Security & Blog Admin
+
+- Frontend source delivered to a browser can always be inspected by visitors. For production privacy, keep the GitHub repository private and deploy only the generated/static site.
+- Blog editing is scaffolded with Decap CMS at `/admin/`, backed by Git Gateway. Configure Netlify Identity + Git Gateway in hosting before using it live.
+- Published posts are stored in `blog-posts.json` and rendered on `blogs.html`.
+
 ## 🚀 Deployment
 
 - **GitHub Pages**: Push to a repo and enable Pages in Settings.
