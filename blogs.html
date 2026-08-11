@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs | Subham Kumar</title>
+    <meta name="description" content="Blog posts by Subham Kumar on AI, ML, computer vision, and frontend engineering.">
+    <meta name="theme-color" content="#000000">
+    <link rel="icon" type="image/png" href="assets/images/s-logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        const savedTheme = localStorage.getItem('portfolio-theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', savedTheme);
+    </script>
+</head>
+
+<body data-theme="dark">
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="cursor-follower"></div>
+
+    <header id="header">
+        <div class="header-wrap">
+            <a href="index.html#home" class="logo">S<span>.K</span></a>
+            <nav class="nav-links">
+                <a href="index.html#home">Home</a>
+                <a href="index.html#skills">Skills</a>
+                <a href="index.html#portfolio">Projects</a>
+                <a href="blogs.html" aria-current="page">Blogs</a>
+                <a href="index.html#academics">Academics</a>
+                <a href="index.html#achievements">Achievements</a>
+                <a href="index.html#contact" class="nav-contact-btn">Contact Us</a>
+            </nav>
+            <div class="header-btns">
+                <button id="theme-toggle" title="Toggle Theme"><i class='bx bx-moon'></i></button>
+                <div class="mobile-toggle" id="mobile-menu-btn"><i class='bx bx-menu'></i></div>
+                <a href="admin/" id="hire-me-btn" class="btn btn-outline">Admin</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero blog-hero reveal" id="blogs">
+            <div class="container">
+                <div class="hero-content">
+                    <h3 class="reveal blog-eyebrow">Research Notes • AI • Web Engineering</h3>
+                    <h1 class="reveal">Latest <span style="color: var(--accent);">Blogs</span></h1>
+                    <p class="reveal">Thoughts, technical notes, and project updates from my work in machine learning, computer vision, and frontend engineering.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section reveal">
+            <div class="container">
+                <div id="blog-grid" class="projects-grid">
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                    <div class="skeleton-card"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="padding: 4rem 0; text-align: center; color: var(--text-dim); font-size: 0.9rem;">
+        <p style="margin-bottom: 1rem;">kumarsubhamsk339@gmail.com</p>
+        &copy; 2024 Subham Kumar. All rights reserved.
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

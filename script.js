@@ -283,4 +283,69 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    /**
+     * 9. BLOG RENDERING
+     */
+    const blogGrid = document.getElementById('blog-grid');
+
+    async function fetchBlogPosts() {
+        if (!blogGrid) return;
+
+        try {
+            const response = await fetch('blog-posts.json', { cache: 'no-store' });
+            if (!response.ok) throw new Error('Blog posts unavailable');
+            const payload = await response.json();
+            const posts = Array.isArray(payload) ? payload : payload.posts || [];
+            renderBlogPosts(posts);
+        } catch (error) {
+            console.error(error);
+            blogGrid.innerHTML = '<p>Blog posts are temporarily unavailable.</p>';
+        }
+    }
+
+    function renderBlogPosts(posts) {
+        if (!blogGrid) return;
+
+        if (!posts.length) {
+            blogGrid.innerHTML = '<p>No blog posts published yet.</p>';
+            return;
+        }
+
+        blogGrid.innerHTML = '';
+        posts
+            .sort((a, b) => new Date(b.date) - new Date(a.date))
+            .forEach(post => {
+                const card = document.createElement('article');
+                card.className = 'project-card blog-card reveal';
+                const tags = (post.tags || []).map(tag => `<span class="tag">${escapeHTML(tag)}</span>`).join('');
+                const publishedDate = post.date
+                    ? new Date(`${post.date}T00:00:00`).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })
+                    : 'Draft';
+
+                card.innerHTML = `
+                    <div class="pj-info">
+                        <div class="pj-tags">${tags}</div>
+                        <p class="blog-meta">${publishedDate}</p>
+                        <h3>${escapeHTML(post.title || 'Untitled')}</h3>
+                        <p>${escapeHTML(post.excerpt || '')}</p>
+                        <div class="blog-content">${escapeHTML(post.content || '')}</div>
+                    </div>
+                `;
+                blogGrid.appendChild(card);
+                revealObserver.observe(card);
+            });
+    }
+
+    function escapeHTML(value) {
+        return String(value)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;');
+    }
+
+    fetchBlogPosts();
+
 });

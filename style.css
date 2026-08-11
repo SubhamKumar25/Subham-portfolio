@@ -1056,3 +1056,43 @@ header {
         grid-template-columns: 1fr;
     }
 }
+/* 13. Blog Page & Admin Entry Points */
+.blog-hero {
+    min-height: 60vh;
+    padding-bottom: 2rem;
+}
+
+.blog-eyebrow {
+    color: var(--accent);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.9rem;
+    margin-bottom: 1rem;
+}
+
+.blog-card .blog-meta {
+    color: var(--text-dim);
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.blog-card .blog-content {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+    line-height: 1.7;
+    margin-top: 1rem;
+    white-space: pre-line;
+}
+
+.skeleton-card {
+    min-height: 220px;
+    border-radius: var(--radius-lg);
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.08),
+            rgba(255, 255, 255, 0.04));
+    background-size: 200% 100%;
+    animation: shimmer 2s infinite;
+    border: 1px solid var(--border);
+}

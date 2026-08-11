@@ -1,0 +1,29 @@
+backend:
+  name: git-gateway
+  branch: main
+
+local_backend: true
+
+media_folder: "assets/images/uploads"
+public_folder: "/assets/images/uploads"
+
+collections:
+  - name: "settings"
+    label: "Site Data"
+    files:
+      - name: "blog_posts"
+        label: "Blog Posts"
+        file: "blog-posts.json"
+        format: "json"
+        fields:
+          - label: "Posts"
+            name: "posts"
+            widget: "list"
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Title", name: "title", widget: "string" }
+              - { label: "Slug", name: "slug", widget: "string", hint: "Use lowercase words separated by hyphens." }
+              - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, format: "YYYY-MM-DD" }
+              - { label: "Excerpt", name: "excerpt", widget: "text" }
+              - { label: "Tags", name: "tags", widget: "list", default: ["AI"] }
+              - { label: "Content", name: "content", widget: "markdown" }
